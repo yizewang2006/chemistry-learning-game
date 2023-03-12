@@ -99,6 +99,8 @@ public class RockSpawner : MonoBehaviour
     GameObject  SpawnTree(Vector3 location, Quaternion rotation)
     {
         GameObject tree =  Instantiate(treePrefab[Random.Range(0, treePrefab.Length)], location, rotation, treeSpawnParent);
+        tree.GetComponentInChildren<MeshRenderer>().gameObject.AddComponent(typeof(MeshCollider));
+        tree.GetComponentInChildren<MeshRenderer>().gameObject.AddComponent(typeof(Discoverable));
         return tree;
     }
 

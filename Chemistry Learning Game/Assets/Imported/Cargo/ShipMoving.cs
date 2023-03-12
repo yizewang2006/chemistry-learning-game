@@ -10,7 +10,6 @@ public class ShipMoving : MonoBehaviour
     private void Update()
     {
         Accelerate();
-        Debug.Log(velocity);
     }
     void Accelerate()
     {
