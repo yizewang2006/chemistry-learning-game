@@ -9,6 +9,8 @@ public class Discoverable : MonoBehaviour
     Material defaultMat;
     bool targeted;
 
+    public ScriptableObject objectScriptableObject; // description, buff, what does it do, etc. 
+
     void Start()
     {
         defaultMat = GetComponent<MeshRenderer>().sharedMaterial;
