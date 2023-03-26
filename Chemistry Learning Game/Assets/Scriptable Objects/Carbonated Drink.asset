@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e6d6a2b2f9de0c49a96be823f97c924, type: 3}
-  m_Name: Nitric Acid
+  m_Script: {fileID: 11500000, guid: c15ecd5d29ec2fc4e94ead32d8aac07e, type: 3}
+  m_Name: Carbonated Drink
   m_EditorClassIdentifier: 
-  displayName: 
+  name: 
   description: 
   displayImage: {fileID: 0}
   canBeInvolvedIn: 

@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+
     public GameObject bookUI;
     private bool uiActive;
 
@@ -14,15 +17,14 @@ public class UIManager : MonoBehaviour
         FPS.allowLook = !uiActive;
     }
 
-    private void Awake()
-    {
-        uiActive = bookUI.activeInHierarchy;
-    }
     private void Update()
     {
+        uiActive = bookUI.activeInHierarchy;
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             ToggleUI();
         }
     }
+
+
 }
