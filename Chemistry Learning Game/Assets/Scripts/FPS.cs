@@ -22,9 +22,9 @@ public class FPS : MonoBehaviour
 	public float camSmoothing = 2;
 
 	[Space(20)]
-	public bool allowMove = true;
-	public bool allowJump = true;
-	public bool allowLook = true;
+	public static bool allowMove = true;
+	public static bool allowJump = true;
+	public static bool allowLook = true;
 
 	CharacterController cc;
 	float speed;
