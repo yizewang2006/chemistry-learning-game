@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15ecd5d29ec2fc4e94ead32d8aac07e, type: 3}
   m_Name: Carbonated Drink
   m_EditorClassIdentifier: 
-  name: 
-  description: 
+  displayName: 
+  description: Also Called Carbonic Acid. Formed by Pressurized Carbon Dioxide and
+    Water.
   displayImage: {fileID: 0}
   canBeInvolvedIn: 
   modelPrefab: {fileID: 0}

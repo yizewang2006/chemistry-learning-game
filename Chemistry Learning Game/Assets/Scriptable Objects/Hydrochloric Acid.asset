@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Hydrochloric Acid
   m_EditorClassIdentifier: 
   displayName: 
-  description: Test
+  description: Hydrocholoric Acid, a very strong acid. Make sure you don't drop it
+    on your skin because it can hurt a lot.
   displayImage: {fileID: 21300000, guid: f41a8331d8bab9f4383137ff77dcf970, type: 3}
   canBeInvolvedIn: 
   modelPrefab: {fileID: 0}
