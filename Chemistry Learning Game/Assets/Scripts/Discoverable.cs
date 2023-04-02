@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Outline))]
 public class Discoverable : MonoBehaviour
 {
+    public bool discardTexture;
     Texture defaultText;
     Material defaultMat;
     bool targeted;
@@ -15,20 +16,25 @@ public class Discoverable : MonoBehaviour
     {
         defaultMat = GetComponent<MeshRenderer>().sharedMaterial;
         defaultText = defaultMat.mainTexture;
+        GetComponent<Outline>().enabled = !discardTexture;
     }
 
     void Update()
     {
         targeted = UniTool.Instance.currentDisc == this;
-        GetComponent<Outline>().enabled = targeted;
-        if (targeted)
+
+        if(!discardTexture)
         {
-            GetComponent<MeshRenderer>().sharedMaterial = UniTool.Instance.hologramMat;
-            GetComponent<MeshRenderer>().sharedMaterial.mainTexture = defaultText;
-        }
-        else
-        {
-            GetComponent<MeshRenderer>().sharedMaterial = defaultMat;
+            GetComponent<Outline>().enabled = targeted;
+            if (targeted)
+            {
+                GetComponent<MeshRenderer>().sharedMaterial = UniTool.Instance.hologramMat;
+                GetComponent<MeshRenderer>().sharedMaterial.mainTexture = defaultText;
+            }
+            else
+            {
+                GetComponent<MeshRenderer>().sharedMaterial = defaultMat;
+            }
         }
     }
 }
