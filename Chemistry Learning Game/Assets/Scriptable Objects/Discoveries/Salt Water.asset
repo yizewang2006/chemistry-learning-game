@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faaede86b89fafc4c892bc64f572080b, type: 3}
+  m_Name: Salt Water
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: b0439fcfcedc20c4880d64ce8a6e0df3, type: 3}
+  title: Salt Water
+  discoveryType: 1
+  tagKeys: 3
+  description: NaCl (aq) that is usually found naturally in big bodies of water.
+  recipe: {fileID: 11400000, guid: 9e22729d523e7eb4c94b0b8d82d112c2, type: 2}

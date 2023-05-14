@@ -1,30 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public bool hasUIOpen;
 
-    public GameObject bookUI;
-    private bool uiActive;
+    public static UIManager Instance;
 
-    void ToggleUI()
+    void Awake()
     {
-        uiActive = !uiActive;
-        bookUI.SetActive(uiActive);
-        FPS.allowLook = !uiActive;
+        Instance = this;
     }
 
-    private void Update()
+    void Update()
     {
-        uiActive = bookUI.activeInHierarchy;
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            ToggleUI();
-        }
+        hasUIOpen = DiscoveryManager.Instance.bookOpen || Inventory.Instance.inventoryOpen || CraftingManager.Instance.craftingUIOpen;
     }
 
-
+    public void CloseAllUI()
+    {
+        DiscoveryManager.Instance.OpenBook(false);
+        Inventory.Instance.OpenInventory(false);
+        CraftingManager.Instance.OpenCrafting(false);
+    }
 }

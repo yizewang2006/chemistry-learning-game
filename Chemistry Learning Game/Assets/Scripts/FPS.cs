@@ -18,19 +18,23 @@ public class FPS : MonoBehaviour
 	public KeyCode jumpKey = KeyCode.Space;
 
 	[Space(20)]
+	public Transform charCamera;
 	public float camSensitivity = 1;
 	public float camSmoothing = 2;
+	public float fovSwitchSpeed;
+	public float fovWalk = 60;
+	public float fovRun = 70;
 
 	[Space(20)]
-	public static bool allowMove = true;
-	public static bool allowJump = true;
-	public static bool allowLook = true;
+	public bool allowMove = true;
+	public bool allowJump = true;
+	public bool allowLook = true;
 
 	CharacterController cc;
 	float speed;
 	bool isGrounded = true;
 
-	Transform charCamera;
+	
 	Vector2 currentMouseLook;
 	Vector2 appliedMouseDelta;
 	Vector3 moveDirection = Vector3.zero;
@@ -46,7 +50,6 @@ public class FPS : MonoBehaviour
 	void Start()
 	{
 		cc = GetComponent<CharacterController>();
-		charCamera = Camera.main.transform;
 	}
 
 	public Transform GetCamera() => charCamera;
@@ -61,6 +64,7 @@ public class FPS : MonoBehaviour
 			Move();
 		Cursor.lockState = allowLook ? CursorLockMode.Locked : CursorLockMode.None;
 		Cursor.visible = allowLook ? false : true;
+		allowLook = !DiscoveryManager.Instance.IsUIOpen() && !Inventory.Instance.IsUIOpen() && !CraftingManager.Instance.craftingUIOpen;
 	}
 
 	void Move()
@@ -104,5 +108,9 @@ public class FPS : MonoBehaviour
 
 		charCamera.localRotation = Quaternion.AngleAxis(-currentMouseLook.y, Vector3.right);
 		transform.localRotation = Quaternion.AngleAxis(currentMouseLook.x, Vector3.up);
+
+		charCamera.GetComponent<Camera>().fieldOfView = speed == walkSpeed? 
+		Mathf.MoveTowards(charCamera.GetComponent<Camera>().fieldOfView, fovWalk, fovSwitchSpeed * Time.deltaTime) : 
+		Mathf.MoveTowards(charCamera.GetComponent<Camera>().fieldOfView, fovRun, fovSwitchSpeed * Time.deltaTime);
 	}
 }
