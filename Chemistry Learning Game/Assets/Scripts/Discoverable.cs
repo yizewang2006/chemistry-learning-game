@@ -9,17 +9,18 @@ public class Discoverable : MonoBehaviour
 {
     public bool discardTexture;
     public bool collectable;
-    [ShowIf("collectable")] public bool infiniteHealth;
+    public bool destroyable;
+    [ShowIf("destroyable")] public bool infiniteHealth;
     [ShowIf("NotInifiniteHP")] public float health = 100;
     [ShowIf("collectable")] public int itemAmount;
-    [ShowIf("collectable")] public bool destroyable;
-    [ShowIf("collectable")] public UnityEvent OnDestroy;
+
+    [ShowIf("destroyable")] public UnityEvent OnDestroy;
     Texture defaultText;
     Material defaultMat;
     bool targeted;
     float startingHealth;
 
-    bool NotInifiniteHP() => !infiniteHealth;
+    bool NotInifiniteHP() => !infiniteHealth & destroyable;
 
     void Start()
     {
@@ -44,8 +45,9 @@ public class Discoverable : MonoBehaviour
             GetComponent<Outline>().enabled = targeted;
             if (targeted)
             {
-
+                
                 GetComponent<MeshRenderer>().sharedMaterial = UniTool.Instance.hologramMat;
+                GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_HoloDistance", 0.4f);
                 GetComponent<MeshRenderer>().sharedMaterial.mainTexture = defaultText;
             }
             else
@@ -76,26 +78,26 @@ public class Discoverable : MonoBehaviour
 
     public void ApplyDamage(float amount)
     {
-        if (collectable)
+        if (NotInifiniteHP())
         {
-            if (NotInifiniteHP())
+            health -= amount;
+            if (health <= 0)
             {
-                health -= amount;
-                if (health <= 0)
-                {
-                    health = 0;
+                health = 0;
+                if (collectable)
                     Inventory.Instance.AddToInventory(GetComponent<DiscoveryHolder>().discovery, itemAmount);
 
-                    if (destroyable)
-                    {
-                        OnDestroy?.Invoke();
-                        Destroy(gameObject);
-                    }
+                if (destroyable)
+                {
+                    OnDestroy?.Invoke();
+                    Destroy(gameObject);
                 }
-            } else
-            {
-                Inventory.Instance.AddToInventory(GetComponent<DiscoveryHolder>().discovery, 1);
             }
+        }
+        else
+        {
+            if (collectable)
+                Inventory.Instance.AddToInventory(GetComponent<DiscoveryHolder>().discovery, 1);
         }
     }
 }

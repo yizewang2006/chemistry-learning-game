@@ -55,6 +55,7 @@ public class DiscoveryManager : MonoBehaviour
     [ReadOnly] Discovery lastDiscovery;
     [ReadOnly] int prevDiscoveredAmt;
     [SerializeField][ReadOnly] List<GameObject> itemsToDisplay = new List<GameObject>();
+    [SerializeField][ReadOnly] List<Discovery> popupDiscoveries = new List<Discovery>();
 
     public static DiscoveryManager Instance;
 
@@ -89,18 +90,20 @@ public class DiscoveryManager : MonoBehaviour
         if (!_discoveries.Contains(disc))
         {
             _discoveries.Add(disc);
-            popUpIcon.sprite = disc.icon;
-            popUpText.text = "Discovered " + disc.title + "!";
+
             CraftingManager.Instance.AddNewRecipe(disc);
             OnNewDiscovery?.Invoke();
-            StartCoroutine(ShowPopUp());
+            popupDiscoveries.Add(disc);
+            StartCoroutine(ShowPopUp(disc));
         }
         else
             print("Already discovered " + disc.title + "!");
     }
 
-    IEnumerator ShowPopUp()
+    IEnumerator ShowPopUp(Discovery disc)
     {
+        popUpIcon.sprite = disc.icon;
+        popUpText.text = "Discovered " + disc.title + "!";
         while (popUpGroup.alpha != 1)
         {
             popUpGroup.alpha = Mathf.MoveTowards(popUpGroup.alpha, 1, Time.deltaTime * 1);
@@ -111,6 +114,12 @@ public class DiscoveryManager : MonoBehaviour
         {
             popUpGroup.alpha = Mathf.MoveTowards(popUpGroup.alpha, 0, Time.deltaTime * 1);
             yield return null;
+        }
+
+        popupDiscoveries.Remove(disc);
+        if(popupDiscoveries.Count > 0)
+        {
+            StartCoroutine(ShowPopUp(popupDiscoveries[0]));
         }
     }
 
@@ -206,7 +215,7 @@ public class DiscoveryManager : MonoBehaviour
 
         int totalPages = Mathf.CeilToInt((float)discoveryObjs.Count / discoveryPerPage);
         string pageText = "Page " + (currentPage + 1) + "/" + totalPages;
-        if(pageText == "Page 1/0") pageText = "Page 0/0";
+        if (pageText == "Page 1/0") pageText = "Page 0/0";
         pageNumberText.text = pageText;
 
         // Clamp pages

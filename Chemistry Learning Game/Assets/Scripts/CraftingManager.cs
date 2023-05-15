@@ -81,6 +81,7 @@ public class CraftingManager : MonoBehaviour
 
         int totalPages = Mathf.CeilToInt((float)recipes.Count / slotsPerPage);
         string pageText = (currentPage + 1) + "/" + totalPages;
+        if(pageText == "1/0") pageText = "0/0";
         pageNumberText.text = pageText;
 
         // Clamp pages
@@ -133,11 +134,11 @@ public class CraftingManager : MonoBehaviour
 
     void UpdateInformationUI()
     {
-        //informationPanel.SetActive(_currentDiscovery != null && _discoveries.Contains(_currentDiscovery));
+        informationPanel.SetActive(_currentDiscovery != null && _discoveries.Contains(_currentDiscovery));
         if (_currentDiscovery != null && _currentDiscovery != lastDiscovery)
         {
             lastDiscovery = _currentDiscovery;
-            if (!_discoveries.Contains(_currentDiscovery))
+            if (!_discoveries.Contains  (_currentDiscovery))
             {
                 iconUI.sprite = _currentDiscovery.icon;
                 titleUI.text = _currentDiscovery.title;

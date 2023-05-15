@@ -168,6 +168,7 @@ public class UniTool : MonoBehaviour
     void ScanComplete(DiscoveryHolder discoveryHolder)
     {
         allowScan = false;
+        if(discoveryHolder.discovery == null) return;
         OnScan?.Invoke();
         DiscoveryManager.Instance.AddNewDiscovery(discoveryHolder.discovery);
     }

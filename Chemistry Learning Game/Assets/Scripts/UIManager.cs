@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        hasUIOpen = DiscoveryManager.Instance.bookOpen || Inventory.Instance.inventoryOpen || CraftingManager.Instance.craftingUIOpen;
+        hasUIOpen = DiscoveryManager.Instance.bookOpen || Inventory.Instance.inventoryOpen || CraftingManager.Instance.craftingUIOpen || TradesManager.Instance.tradeUIOpen;
     }
 
     public void CloseAllUI()
@@ -23,5 +23,6 @@ public class UIManager : MonoBehaviour
         DiscoveryManager.Instance.OpenBook(false);
         Inventory.Instance.OpenInventory(false);
         CraftingManager.Instance.OpenCrafting(false);
+        TradesManager.Instance.OpenTrade(false);
     }
 }

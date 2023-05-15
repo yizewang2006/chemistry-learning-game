@@ -48,17 +48,32 @@ public class CraftButton : MonoBehaviour
             Inventory.Instance.AddToInventory(GetComponent<DiscoveryHolder>().discovery.recipe.recipeResults[i], 1);
         }
         CraftingManager.Instance.GetComponent<AudioSource>().PlayOneShot(OnSuccessCraft);
-        print("Sucess Craft");
+        print("Success Craft");
     }
 
     public bool ProceedCraftCheck()
     {
+        Dictionary<Discovery, int> requirementCounts = new Dictionary<Discovery, int>();
+
+        // Count the occurrences of each requirement in the requirements list
         foreach (var req in requirements)
         {
+            if (requirementCounts.ContainsKey(req))
+                requirementCounts[req]++;
+            else
+                requirementCounts[req] = 1;
+        }
 
-            if (!Inventory.Instance._items.Contains(req))
+        // Check if the requirements are met in the _items list
+        foreach (var kvp in requirementCounts)
+        {
+            int requiredCount = kvp.Value;
+            int itemCount = Inventory.Instance.GetItemCount(kvp.Key);
+
+            if (requiredCount > itemCount)
                 return false;
         }
+
         return true;
     }
 }

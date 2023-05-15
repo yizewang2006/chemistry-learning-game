@@ -57,12 +57,16 @@ public class Inventory : MonoBehaviour
 
     public bool AddToInventory(Discovery newItem, int amount)
     {
-        if(newItem == null) return false;
+        if (newItem == null) return false;
 
-        _items.Add(newItem);
-        OnItemAdd?.Invoke();
-        AddToPickupNotifier(newItem);
-        DiscoveryManager.Instance.AddNewDiscovery(newItem);
+        for (int i = 0; i < amount; i++)
+        {
+            _items.Add(newItem);
+            OnItemAdd?.Invoke();
+            AddToPickupNotifier(newItem);
+            DiscoveryManager.Instance.AddNewDiscovery(newItem);
+        }
+        RefreshSlots();
         return true;
     }
 
@@ -70,14 +74,15 @@ public class Inventory : MonoBehaviour
     {
         foreach (var i in _items)
         {
-            if(i == item.discovery){
+            if (i == item.discovery)
+            {
                 _items.RemoveAt(_items.IndexOf(i));
                 return;
             }
         }
         //_items.RemoveAt(slots.IndexOf(item));
     }
-        
+
     public void AddToPickupNotifier(Discovery discovery)
     {
         Transform newNotifier = Instantiate(pickupNotifierPrefab, pickupNotifierContainer).transform;
@@ -85,7 +90,16 @@ public class Inventory : MonoBehaviour
         newNotifier.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = discovery.title;
     }
 
-
+    public int GetItemCount(Discovery item)
+    {
+        int count = 0;
+        foreach (var inventoryItem in _items)
+        {
+            if (inventoryItem == item)
+                count++;
+        }
+        return count;
+    }
 
     void Update()
     {
@@ -109,6 +123,7 @@ public class Inventory : MonoBehaviour
 
         int totalPages = Mathf.CeilToInt((float)slots.Count / slotsPerPage);
         string pageText = (currentPage + 1) + "/" + totalPages;
+        if (pageText == "1/0") pageText = "0/0";
         pageNumberText.text = pageText;
 
         // Clamp pages
@@ -130,20 +145,25 @@ public class Inventory : MonoBehaviour
         {
             prevItemAmt = _items.Count;
 
-            slots.Clear();
-            for (int i = slotsContainer.childCount - 1; i >= 0; i--)
-                Destroy(slotsContainer.GetChild(i).gameObject);
+            RefreshSlots();
+        }
+    }
 
-            foreach (Discovery item in _items)
+    void RefreshSlots()
+    {
+        slots.Clear();
+        for (int i = slotsContainer.childCount - 1; i >= 0; i--)
+            Destroy(slotsContainer.GetChild(i).gameObject);
+
+        foreach (Discovery item in _items)
+        {
+            Transform itemObj = Instantiate(slotsPrefab, slotsContainer);
+
+            if (!string.IsNullOrEmpty(item.title))
             {
-                Transform itemObj = Instantiate(slotsPrefab, slotsContainer);
-
-                if (!string.IsNullOrEmpty(item.title))
-                {
-                    itemObj.GetChild(0).GetComponent<Image>().sprite = item.icon;
-                    itemObj.GetComponent<DiscoveryHolder>().discovery = item;
-                    slots.Add(itemObj.GetComponent<DiscoveryHolder>());
-                }
+                itemObj.GetChild(0).GetComponent<Image>().sprite = item.icon;
+                itemObj.GetComponent<DiscoveryHolder>().discovery = item;
+                slots.Add(itemObj.GetComponent<DiscoveryHolder>());
             }
         }
     }
@@ -169,6 +189,12 @@ public class Inventory : MonoBehaviour
                 createdTag.SetActive((_currentDiscovery.tagKeys & Discovery.TagKey.Created) != 0);
             }
         }
+    }
+
+    public void SortInventory()
+    {
+        _items.Sort((d1, d2) => d1.title.CompareTo(d2.title));
+        RefreshSlots();
     }
 
     public void OpenInventory(bool active)

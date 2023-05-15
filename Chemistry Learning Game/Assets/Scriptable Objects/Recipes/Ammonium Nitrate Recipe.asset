@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1b59aba3efb6884693b1fd5cba95da0, type: 3}
+  m_Name: Ammonium Nitrate Recipe
+  m_EditorClassIdentifier: 
+  craftingMachineIcon: {fileID: 21300000, guid: 53e42148ba52711479e89ce6c70706b0, type: 3}
+  recipeRequirements:
+  - {fileID: 11400000, guid: 9a87ded79d6d6944f9cdba60220bd1ff, type: 2}
+  - {fileID: 11400000, guid: c854824fb9248334f94fadf569b67a36, type: 2}
+  recipeResults:
+  - {fileID: 11400000, guid: e2d3a3fb9a1372f4290b5f700d275de9, type: 2}
+  - {fileID: 11400000, guid: e2d3a3fb9a1372f4290b5f700d275de9, type: 2}

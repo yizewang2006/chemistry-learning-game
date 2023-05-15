@@ -49,62 +49,86 @@ public class TreeSpawner : MonoBehaviour
     void Update()
     {
         allSpawned = defaultSpawned && denseSpawned;
+
+
+        CleanupList();
     }
-
-    void SpawnDefaultDense(Vector2 startingPos, Vector2 endingPos, Vector2 spacing)
+    void CleanupList()
     {
-        float randSpace = 1;
-        for (float row = startingPos.x; row < endingPos.x; row += randSpace)
+        // Create a new list to store non-empty game objects
+        List<GameObject> nonEmptyObjects = new List<GameObject>();
+
+        // Loop through the original list
+        for (int i = 0; i < spawnedTrees.Count; i++)
         {
-            for (float col = startingPos.y; col < endingPos.y; col += randSpace)
+            GameObject obj = spawnedTrees[i];
+
+            // Check if the slot is empty (null)
+            if (obj != null)
             {
-                randSpace = Random.Range(spacing.x, spacing.y);
-                if (Physics.Raycast(new Vector3(row, 200, col), Vector3.down, out hit, Mathf.Infinity, terrainLayer))
-                {
-                    if (hit.point.y >= spawnHeightMin && hit.collider.CompareTag("Terrain"))
-                    {
-                        if (Random.Range(0, 2) == 0) continue;
-                        GameObject tree = SpawnTree(hit.point, Quaternion.Euler(hit.normal));
-                        spawnedTrees.Add(tree);
-                    }
-                }
-
-            }
-            randSpace = Random.Range(spacingRangeDefault.x, spacingRangeDefault.y);
-        }
-
-        defaultSpawned = true;
-    }
-
-    void SpawnDenseArea(Vector2 center, Vector2 size, Vector2 spacing)
-    {
-        for (float row = center.x - size.x / 2; row < center.x + size.x / 2; row += spacing.x)
-        {
-            for (float col = center.y - size.y / 2; col < center.y + size.y / 2; col += spacing.y)
-            {
-                if (Physics.Raycast(new Vector3(row, 200, col), Vector3.down, out hit, Mathf.Infinity, terrainLayer))
-                {
-                    if (hit.point.y >= spawnHeightMin && hit.collider.CompareTag("Terrain"))
-                    {
-                        if (Random.Range(0, 2) == 0) continue;
-                        GameObject tree = SpawnTree(hit.point, Quaternion.Euler(hit.normal));
-                        spawnedTrees.Add(tree);
-                    }
-                }
+                // If not empty, add it to the new list
+                nonEmptyObjects.Add(obj);
             }
         }
 
-        denseSpawned = true;
+        // Replace the original list with the non-empty list
+        spawnedTrees = nonEmptyObjects;
     }
 
-    GameObject SpawnTree(Vector3 location, Quaternion rotation)
+void SpawnDefaultDense(Vector2 startingPos, Vector2 endingPos, Vector2 spacing)
+{
+    float randSpace = 1;
+    for (float row = startingPos.x; row < endingPos.x; row += randSpace)
     {
-        GameObject tree = Instantiate(treePrefab[Random.Range(0, treePrefab.Length)], location, rotation, treeSpawnParent);
-        return tree;
+        for (float col = startingPos.y; col < endingPos.y; col += randSpace)
+        {
+            randSpace = Random.Range(spacing.x, spacing.y);
+            if (Physics.Raycast(new Vector3(row, 200, col), Vector3.down, out hit, Mathf.Infinity, terrainLayer))
+            {
+                if (hit.point.y >= spawnHeightMin && hit.collider.CompareTag("Terrain"))
+                {
+                    if (Random.Range(0, 2) == 0) continue;
+                    GameObject tree = SpawnTree(hit.point, Quaternion.Euler(hit.normal));
+                    spawnedTrees.Add(tree);
+                }
+            }
+
+        }
+        randSpace = Random.Range(spacingRangeDefault.x, spacingRangeDefault.y);
     }
 
-    public List<GameObject> GetSpawnedTrees()
+    defaultSpawned = true;
+}
+
+void SpawnDenseArea(Vector2 center, Vector2 size, Vector2 spacing)
+{
+    for (float row = center.x - size.x / 2; row < center.x + size.x / 2; row += spacing.x)
     {
-        return spawnedTrees;
+        for (float col = center.y - size.y / 2; col < center.y + size.y / 2; col += spacing.y)
+        {
+            if (Physics.Raycast(new Vector3(row, 200, col), Vector3.down, out hit, Mathf.Infinity, terrainLayer))
+            {
+                if (hit.point.y >= spawnHeightMin && hit.collider.CompareTag("Terrain"))
+                {
+                    if (Random.Range(0, 2) == 0) continue;
+                    GameObject tree = SpawnTree(hit.point, Quaternion.Euler(hit.normal));
+                    spawnedTrees.Add(tree);
+                }
+            }
+        }
     }
+
+    denseSpawned = true;
+}
+
+GameObject SpawnTree(Vector3 location, Quaternion rotation)
+{
+    GameObject tree = Instantiate(treePrefab[Random.Range(0, treePrefab.Length)], location, rotation, treeSpawnParent);
+    return tree;
+}
+
+public List<GameObject> GetSpawnedTrees()
+{
+    return spawnedTrees;
+}
 }

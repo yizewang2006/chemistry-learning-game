@@ -15,7 +15,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: b15c44c5de4070042b42032692e3bc1a, type: 3}
   title: Salt
   discoveryType: 1
-  tagKeys: 12
+  tagKeys: 13
   description: NaCl (s) is present in large quantities in seawater, where it is the
     main mineral constituent. Salt is essential for animal life and saltiness is
     one of the basic human tastes.
