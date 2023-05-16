@@ -57,6 +57,8 @@ public class DiscoveryManager : MonoBehaviour
     [SerializeField][ReadOnly] List<GameObject> itemsToDisplay = new List<GameObject>();
     [SerializeField][ReadOnly] List<Discovery> popupDiscoveries = new List<Discovery>();
 
+    public List<Discovery> testDisc = new List<Discovery>();
+
     public static DiscoveryManager Instance;
 
     void Awake()
@@ -80,7 +82,6 @@ public class DiscoveryManager : MonoBehaviour
         {
             OpenBook(!bookUI.activeSelf);
         }
-
 
         if (_currentDiscovery == null && _discoveries.Count > 0) _currentDiscovery = _discoveries[0];
     }

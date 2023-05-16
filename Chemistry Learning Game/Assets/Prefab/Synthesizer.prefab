@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4397820786092249335}
   - component: {fileID: 4461779807105401955}
   - component: {fileID: 4461779807105401956}
+  - component: {fileID: -2618174834002249023}
   m_Layer: 0
   m_Name: Synthesizer
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4461062380822607549}
-  m_LocalRotation: {x: -0, y: 0.4280876, z: -0, w: 0.9037373}
+  m_LocalRotation: {x: 0, y: 0.42809147, z: 0, w: 0.90373546}
   m_LocalPosition: {x: -360.78, y: -374.002, z: 498.37}
   m_LocalScale: {x: 0.70831, y: 0.70831, z: 0.70831}
   m_ConstrainProportionsScale: 0
@@ -116,22 +117,10 @@ MonoBehaviour:
   OnInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: CloseAllUI
+      - m_Target: {fileID: -2618174834002249023}
+        m_TargetAssemblyTypeName: Synthesizer, Assembly-CSharp
+        m_MethodName: UseSynthesizer
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CraftingManager, Assembly-CSharp
-        m_MethodName: OpenCrafting
-        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -158,3 +147,15 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &-2618174834002249023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4461062380822607549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8133b1eeedc65cc4bac9fbd928018ffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

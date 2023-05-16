@@ -41,7 +41,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: eacf414c4dbaa3d479d79438b6c50f2c, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -78,7 +78,7 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _HoloCrowdness: 2
-    - _HoloDistance: 0.875
+    - _HoloDistance: 0.5
     - _HoloGap: 0.23
     - _HoloSpeed: 1.17
     - _HoloValue: 0.86

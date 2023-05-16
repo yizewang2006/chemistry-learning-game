@@ -14,6 +14,7 @@ public class CraftingManager : MonoBehaviour
     [Header("UI")]
     public GameObject craftingPanel;
     public List<DiscoveryHolder> recipes = new List<DiscoveryHolder>();
+    public List<Recipe> allRecipes = new List<Recipe>();
     [Header("Information UI")]
     public GameObject informationPanel;
     public Image iconUI;
@@ -58,9 +59,25 @@ public class CraftingManager : MonoBehaviour
             if (item.recipe == newDiscovery.recipe) return false;
         }
         if (newDiscovery.recipe == null) return false;
-        _discoveries.Add(newDiscovery);
+            _discoveries.Add(newDiscovery);
+        // foreach (var allR in CraftingManager.Instance.allRecipes)
+        // {
+        //     if(allR.recipeRequirements.All(requiredDisc => DiscoveryManager.Instance._discoveries.Contains(requiredDisc)))
+        //     {
+        //         for (int i = 0; i < allR.recipeResults.Count; i++)
+        //         {
+        //             foreach (var item in _discoveries.ToList())
+        //             {
+        //                 if (item.recipe != allR.recipeResults[i].recipe) _discoveries.Add(allR.recipeResults[i]);
+        //             }
+                    
+        //         }
+        //     }
+        
+        // }
         return true;
     }
+
 
     void Update()
     {
@@ -68,8 +85,8 @@ public class CraftingManager : MonoBehaviour
         UpdateInformationUI();
         UpdateRecipeUI();
 
-
         craftingUIOpen = craftingPanel.activeSelf;
+        
     }
 
     void UpdateRecipeUI()
@@ -171,6 +188,11 @@ public class CraftingManager : MonoBehaviour
         if (active)
             OnCraftingOpen?.Invoke();
         craftingPanel.SetActive(active);
+    }
+
+    public void ChangePage(int amt)
+    {
+        currentPage += amt;
     }
 
     public bool IsUIOpen() => craftingUIOpen;
